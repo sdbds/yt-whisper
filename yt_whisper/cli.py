@@ -30,7 +30,7 @@ def main():
     parser.add_argument("--break-lines", type=int, default=0, 
                         help="Whether to break lines into a bottom-heavy pyramid shape if line length exceeds N characters. 0 disables line breaking.")
     parser.add_argument("--device", choices=("cpu", "cuda"), help="device to use for PyTorch inference")
-    parser.add_argument("--split_size", type=int, default=128, help="PYTORCH_CUDA_ALLOC max_split_size_mb")
+    parser.add_argument("--split_size", type=int2str, default=128, help="PYTORCH_CUDA_ALLOC max_split_size_mb")
 
     args = parser.parse_args().__dict__
     model_name: str = args.pop("model")
