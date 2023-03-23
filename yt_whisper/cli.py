@@ -30,14 +30,13 @@ def main():
     parser.add_argument("--break-lines", type=int, default=0, 
                         help="Whether to break lines into a bottom-heavy pyramid shape if line length exceeds N characters. 0 disables line breaking.")
     parser.add_argument("--device", choices=("cpu", "cuda"), help="device to use for PyTorch inference")
-    parser.add_argument("--split_size", type=int2str, default=128, help="PYTORCH_CUDA_ALLOC max_split_size_mb")
 
     args = parser.parse_args().__dict__
     model_name: str = args.pop("model")
     output_dir: str = args.pop("output_dir")
     device: str = args.pop("device")
     subtitles_format: str = args.pop("format")
-    os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "max_split_size_mb:" + args.pop("split_size")
+    os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "max_split_size_mb:128"
     os.makedirs(output_dir, exist_ok=True)
 
     if model_name.endswith(".en"):
