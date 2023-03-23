@@ -29,11 +29,12 @@ def main():
 
     parser.add_argument("--break-lines", type=int, default=0, 
                         help="Whether to break lines into a bottom-heavy pyramid shape if line length exceeds N characters. 0 disables line breaking.")
+    parser.add_argument("--device", choices=("cpu", "cuda"), help="device to use for PyTorch inference")
 
     args = parser.parse_args().__dict__
     model_name: str = args.pop("model")
     output_dir: str = args.pop("output_dir")
-    subtitles_format: str = args.pop("format")
+    device: str = args.pop("device")
     os.makedirs(output_dir, exist_ok=True)
 
     if model_name.endswith(".en"):
@@ -41,7 +42,7 @@ def main():
             f"{model_name} is an English-only model, forcing English detection.")
         args["language"] = "en"
 
-    model = whisper.load_model(model_name)
+    model = whisper.load_model(model_name, device=device)
     with tempfile.TemporaryDirectory() as tmp_dir:
         audios = get_audio(args.pop("video"), tmp_dir)
         break_lines = args.pop("break_lines")
