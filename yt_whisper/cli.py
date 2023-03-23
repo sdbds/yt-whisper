@@ -35,6 +35,7 @@ def main():
     model_name: str = args.pop("model")
     output_dir: str = args.pop("output_dir")
     device: str = args.pop("device")
+    subtitles_format: str = args.pop("format")
     os.makedirs(output_dir, exist_ok=True)
 
     if model_name.endswith(".en"):
