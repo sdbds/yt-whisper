@@ -75,7 +75,21 @@ def write_srt(transcript: Iterator[dict], file: TextIO, line_length: int = 0):
             file=file,
             flush=True,
         )
-
+        
+def write_txt(transcript: Iterator[dict], file: TextIO, line_length: int = 0):
+     for i, segment in enumerate(transcript, start=1):
+        segment = process_segment(segment, line_length=line_length)
+        
+        print(segment["text"].strip(), file=file, flush=True)
+            
+def write_tsv(transcript: Iterator[dict], file: TextIO, line_length: int = 0):
+        print("start", "end", "text", sep="\t", file=file)
+        for i, segment in enumerate(transcript, start=1):
+        segment = process_segment(segment, line_length=line_length
+            print(round(1000 * segment["start"]), file=file, end="\t")
+            print(round(1000 * segment["end"]), file=file, end="\t")
+            print(segment["text"].strip().replace("\t", " "), file=file, flush=True)
+            
 def slugify(title):
     return "".join(c if c.isalnum() else "_" for c in title).rstrip("_")
 
